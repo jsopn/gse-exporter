@@ -1,0 +1,29 @@
+{{- if .Values.serviceMonitor.enabled }}
+{{- $sm := .Values.serviceMonitor }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "gse-exporter.fullname" . }}
+  labels:
+    {{- include "gse-exporter.labels" . | nindent 4 }}
+    {{- with $sm.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "gse-exporter.selectorLabels" . | nindent 6 }}
+  endpoints:
+    - port: http
+      path: {{ include "gse-exporter.telemetryPath" . }}
+      interval: {{ $sm.interval }}
+      scrapeTimeout: {{ $sm.scrapeTimeout }}
+      {{- with $sm.relabelings }}
+      relabelings:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with $sm.metricRelabelings }}
+      metricRelabelings:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

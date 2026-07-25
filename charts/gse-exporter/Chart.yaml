@@ -1,0 +1,15 @@
+apiVersion: v2
+name: gse-exporter
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+home: https://github.com/jsopn/gse-exporter
+sources:
+  - https://github.com/jsopn/gse-exporter
+keywords:
+  - prometheus
+  - exporter
+  - energy
+  - georgia
+maintainers:
+  - name: jsopn

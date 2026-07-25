@@ -1,0 +1,6 @@
+/bin/
+/dist/
+/gse-exporter
+/result
+.direnv/
+.DS_Store

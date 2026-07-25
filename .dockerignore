@@ -1,0 +1,12 @@
+.git
+.github
+.direnv
+.envrc
+bin
+dist
+result
+charts
+flake.nix
+flake.lock
+justfile
+Dockerfile

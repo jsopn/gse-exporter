@@ -1,0 +1,101 @@
+image:
+  repository: ghcr.io/jsopn/gse-exporter
+  tag: ""
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+config:
+  telemetryPath: /metrics
+  baseURL: ""
+  # upstream samples every 3m, their own dashboard polls at 60s
+  pollInterval: 1m
+  pollTimeout: 15s
+  logLevel: info
+
+extraArgs: []
+extraEnv: []
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+automountServiceAccountToken: false
+
+podAnnotations: {}
+podLabels: {}
+
+scrapeAnnotations:
+  enabled: false
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 65532
+  runAsGroup: 65532
+  seccompProfile:
+    type: RuntimeDefault
+
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop: [ALL]
+
+resources:
+  requests:
+    cpu: 10m
+    memory: 32Mi
+  limits:
+    memory: 128Mi
+
+service:
+  type: ClusterIP
+  port: 9821
+  annotations: {}
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+serviceMonitor:
+  enabled: false
+  interval: 60s
+  scrapeTimeout: 10s
+  labels: {}
+  relabelings: []
+  metricRelabelings: []
+
+prometheusRule:
+  enabled: false
+  labels: {}
+
+rules:
+  consumptionCollapse:
+    enabled: true
+    ratio: 0.7
+    window: 15m
+    for: 3m
+    severity: critical
+  consumptionBelowPlan:
+    enabled: true
+    ratio: 0.35
+    for: 15m
+    severity: critical
+  exporterDown:
+    enabled: true
+    for: 15m
+    severity: warning
+  dataStale:
+    enabled: true
+    for: 10m
+    maxAgeSeconds: 1800
+    severity: warning
+  frequencyDeviation:
+    enabled: true
+    for: 5m
+    deviationHz: 0.2
+    severity: warning
+  additional: []
