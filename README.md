@@ -31,6 +31,14 @@ curl localhost:9821/metrics
 | `gse_data_timestamp_seconds` | newest upstream sample, alert on its age |
 | `gse_up` | last poll ok |
 
+## grafana
+
+import [dashboards/gse-exporter.json](dashboards/gse-exporter.json) and pick your prometheus datasource
+
+<p align="center">
+  <img src="assets/dashboard.png" alt="the dashboard">
+</p>
+
 ## helm
 
 ```sh
